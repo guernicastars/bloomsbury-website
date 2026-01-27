@@ -85,7 +85,7 @@ export default function BloomsburyPage() {
           <a href="#team" className="hover:opacity-50 transition-opacity">
             Team
           </a>
-          <a href="#" className="hover:opacity-50 transition-opacity">
+          <a href="/whitepapers" className="hover:opacity-50 transition-opacity">
             Whitepapers
           </a>
           <a
@@ -432,10 +432,15 @@ export default function BloomsburyPage() {
               <h5 className="text-white mb-4 uppercase tracking-widest">
                 Connect
               </h5>
-              <a href="#" className="block hover:text-white transition-colors">
+              <a
+                href="https://www.linkedin.com/company/bloomsbury-technology/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-white transition-colors"
+              >
                 LinkedIn
               </a>
-              <a href="#" className="block hover:text-white transition-colors">
+              <a href="/whitepapers" className="block hover:text-white transition-colors">
                 Whitepapers
               </a>
             </div>
