@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, FileText, Download } from "lucide-react";
+import { ArrowLeft, FileText, Download, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const FadeIn = ({
@@ -25,11 +25,20 @@ const FadeIn = ({
 export default function WhitepapersPage() {
   const papers = [
     {
+      title: "Understanding Prices at Art Auctions: A Conceptual Framework for the Auction Price Mechanism",
+      abstract:
+        "Noll, Laura Johanna (2022). The foundational theoretical framework providing a multi-dimensional approach to value construction and price mechanisms in global art markets.",
+      date: "2022",
+      status: "Reference",
+      url: "https://www.alexandria.unisg.ch/handle/20.500.14171/108262",
+    },
+    {
       title: "The Noll Framework: Operationalizing Art Market Analysis",
       abstract:
         "An in-depth look at how we adapt Roger Noll's sports economics framework to decode the sociological and institutional drivers of asset appreciation in the art market.",
       date: "Q4 2025",
       status: "Available",
+      url: "/whitepapers/noll-framework.pdf",
     },
     {
       title: "Causal Inference in Low-Liquidity Environments",
@@ -37,6 +46,7 @@ export default function WhitepapersPage() {
         "methodologies for applying Structural Causal Models (SCM) to datasets with high sparsity and irregular time-intervals, moving beyond standard time-series analysis.",
       date: "Q1 2026",
       status: "Coming Soon",
+      url: "",
     },
     {
       title: "Behavioral Alpha: Quantifying the Winner's Curse",
@@ -44,6 +54,7 @@ export default function WhitepapersPage() {
         "Using Agent-Based Modeling (ABM) to simulate auction room dynamics and identify optimal bidding strategies to avoid overpayment in heated markets.",
       date: "Q1 2026",
       status: "Coming Soon",
+      url: "",
     },
   ];
 
@@ -90,14 +101,29 @@ export default function WhitepapersPage() {
                     </p>
                   </div>
                   <div className="flex items-center">
-                    {paper.status === "Available" ? (
-                      <button className="flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-mono text-xs uppercase tracking-wider hover:bg-neutral-800 transition-colors">
+                    {paper.status === "Reference" ? (
+                      <a
+                        href={paper.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-6 py-3 border border-neutral-900 text-neutral-900 font-mono text-xs uppercase tracking-wider hover:bg-neutral-900 hover:text-white transition-all"
+                      >
+                        <ExternalLink size={16} />
+                        Source
+                      </a>
+                    ) : paper.status === "Available" && paper.url ? (
+                      <a
+                        href={paper.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-mono text-xs uppercase tracking-wider hover:bg-neutral-800 transition-colors"
+                      >
                         <Download size={16} />
                         PDF
-                      </button>
+                      </a>
                     ) : (
                       <div className="px-6 py-3 border border-neutral-200 text-neutral-400 font-mono text-xs uppercase tracking-wider cursor-not-allowed">
-                        Restricted
+                        {paper.status === "Available" ? "Missing URL" : "Restricted"}
                       </div>
                     )}
                   </div>
