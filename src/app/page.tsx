@@ -327,7 +327,7 @@ export default function BloomsburyPage() {
                 role: "CFO",
                 email: "nikita.berezin@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/nikita-berezin-44b5a2141/",
-                desc: "Financial Structuring & Compliance.",
+                desc: "Financial Structuring & Compliance. LSE.",
               },
               {
                 name: "Delphine Provost",
@@ -341,28 +341,28 @@ export default function BloomsburyPage() {
                 role: "COO",
                 email: "eugene.brotonsbatista@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/eugenia-brotons-batista/",
-                desc: "Operations & Strategy Execution.",
+                desc: "Operations & Strategy Execution. LSE.",
               },
               {
                 name: "Paulina Sielska",
                 role: "Vice President (Research)",
                 email: "paulina.sielska@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/paulina-sielska-6082aa1b8/",
-                desc: "Research Strategy & Operations.",
+                desc: "Research Strategy & Operations. LSE.",
               },
               {
                 name: "Nikol Savova",
                 role: "Head of Quant Research",
                 email: "nikol.savova@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/nikolsavova/",
-                desc: "Causal Inference & ML. Final year Oxford Mathematics.",
+                desc: "Causal Inference & ML. Oxford Mathematics.",
               },
               {
                 name: "Andrew Vavrunek",
                 role: "VC Relations",
                 email: "andrew.vavrunek@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/andrewvavrunek/",
-                desc: "Investor Relations & Partnerships.",
+                desc: "Investor Relations & Partnerships. UCSC / LSE.",
               },
             ].map((member, i) => (
               <FadeIn key={i} delay={0.1 * i}>
