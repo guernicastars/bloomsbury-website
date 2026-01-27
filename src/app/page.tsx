@@ -74,7 +74,7 @@ export default function BloomsburyPage() {
         <div className="font-mono font-bold tracking-tighter text-xl">
           BLOOMSBURY TECHNOLOGY
         </div>
-        <div className="hidden md:flex gap-8 font-mono text-xs uppercase tracking-widest">
+        <div className="hidden md:flex gap-8 items-center font-mono text-xs uppercase tracking-widest">
           <a href="#thesis" className="hover:opacity-50 transition-opacity">
             Thesis
           </a>
@@ -83,6 +83,9 @@ export default function BloomsburyPage() {
           </a>
           <a href="#team" className="hover:opacity-50 transition-opacity">
             Team
+          </a>
+          <a href="#" className="hover:opacity-50 transition-opacity">
+            Whitepapers
           </a>
           <a
             href="#contact"
@@ -290,7 +293,7 @@ export default function BloomsburyPage() {
                   <span className="block text-neutral-400 text-xs mb-1">
                     Pedigree
                   </span>
-                  Oxford, LSE, Berkeley, TUM
+                  Oxford, LSE, Berkeley
                 </div>
                 <div className="bg-neutral-50 p-4 border border-neutral-100">
                   <span className="block text-neutral-400 text-xs mb-1">
@@ -306,28 +309,45 @@ export default function BloomsburyPage() {
             {[
               {
                 name: "Eugene Shcherbinin",
-                role: "Co-Founder / CEO",
+                role: "CEO",
+                email: "eugene.shcherbinin@bloomsburytech.com",
                 desc: "Business Development & Strategy. Berkeley/LSE.",
               },
               {
                 name: "Maxim Kalpin",
-                role: "Co-Founder / CTO",
+                role: "CTO",
+                email: "maxim.kalpin@bloomsburytech.com",
                 desc: "Data Engineering & Infrastructure. JKU.",
               },
               {
-                name: "Nikol Savova",
-                role: "Head of Research / Quant",
-                desc: "Causal Inference & ML. Final year Oxford Mathematics.",
+                name: "Nikita Berezin",
+                role: "CTO",
+                email: "nikita.berezin@bloomsburytech.com",
+                desc: "Financial Structuring & Compliance.",
               },
               {
                 name: "Delphine Provost",
-                role: "VP",
+                role: "COO",
+                email: "delphine.provost@bloomsburytech.com",
                 desc: "Operations & Management. LSE.",
               },
               {
-                name: "Nikita Berezin",
-                role: "CFO / Legal",
-                desc: "Financial Structuring & Compliance.",
+                name: "Eugene Brotons Batista",
+                role: "Vice President",
+                email: "eugene.brotonsbatista@bloomsburytech.com",
+                desc: "Strategy & Operations.",
+              },
+              {
+                name: "Nikol Savova",
+                role: "VP, Head of Quant Research",
+                email: "nikol.savova@bloomsburytech.com",
+                desc: "Causal Inference & ML. Final year Oxford Mathematics.",
+              },
+              {
+                name: "Andrew Vavrunek",
+                role: "VC Relations",
+                email: "andrew.vavrunek@bloomsburytech.com",
+                desc: "Investor Relations & Partnerships.",
               },
             ].map((member, i) => (
               <FadeIn key={i} delay={0.1 * i}>
@@ -338,7 +358,13 @@ export default function BloomsburyPage() {
                       {member.role}
                     </span>
                   </div>
-                  <p className="text-neutral-500 font-light">{member.desc}</p>
+                  <p className="text-neutral-500 font-light mb-2">{member.desc}</p>
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="text-xs font-mono text-neutral-400 hover:text-black transition-colors"
+                  >
+                    {member.email}
+                  </a>
                 </div>
               </FadeIn>
             ))}
@@ -358,11 +384,11 @@ export default function BloomsburyPage() {
             </h2>
             <div className="flex flex-col gap-4">
               <a
-                href="mailto:eugene@bloomsbury.tech"
+                href="mailto:eugene.shcherbinin@bloomsburytech.com"
                 className="group flex items-center gap-4 text-xl hover:text-neutral-300 transition-colors"
               >
                 <span className="border-b border-neutral-700 pb-1 group-hover:border-white transition-colors">
-                  eugene@bloomsbury.tech
+                  eugene.shcherbinin@bloomsburytech.com
                 </span>
                 <ArrowRight className="group-hover:translate-x-2 transition-transform" />
               </a>
@@ -385,7 +411,7 @@ export default function BloomsburyPage() {
                 LinkedIn
               </a>
               <a href="#" className="block hover:text-white transition-colors">
-                Twitter
+                Whitepapers
               </a>
             </div>
           </div>
