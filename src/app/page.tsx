@@ -11,6 +11,7 @@ import {
   Users,
   Cpu,
   ChevronDown,
+  Linkedin,
 } from "lucide-react";
 
 // --- Components ---
@@ -305,66 +306,83 @@ export default function BloomsburyPage() {
             </FadeIn>
           </div>
 
-          <div className="space-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
             {[
               {
                 name: "Eugene Shcherbinin",
                 role: "CEO",
                 email: "eugene.shcherbinin@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/eugene-shcherbinin/",
                 desc: "Business Development & Strategy. Berkeley/LSE.",
               },
               {
                 name: "Maxim Kalpin",
                 role: "CTO",
                 email: "maxim.kalpin@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/maxim-kalpin/",
                 desc: "Data Engineering & Infrastructure. JKU.",
               },
               {
                 name: "Nikita Berezin",
                 role: "CTO",
                 email: "nikita.berezin@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/nikita-berezin-44b5a2141/",
                 desc: "Financial Structuring & Compliance.",
               },
               {
                 name: "Delphine Provost",
                 role: "COO",
                 email: "delphine.provost@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/delphine-provost-72a35b251/",
                 desc: "Operations & Management. LSE.",
               },
               {
                 name: "Eugene Brotons Batista",
                 role: "Vice President",
                 email: "eugene.brotonsbatista@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/eugenia-brotons-batista/",
                 desc: "Strategy & Operations.",
               },
               {
                 name: "Nikol Savova",
                 role: "VP, Head of Quant Research",
                 email: "nikol.savova@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/nikolsavova/",
                 desc: "Causal Inference & ML. Final year Oxford Mathematics.",
               },
               {
                 name: "Andrew Vavrunek",
                 role: "VC Relations",
                 email: "andrew.vavrunek@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/andrewvavrunek/",
                 desc: "Investor Relations & Partnerships.",
               },
             ].map((member, i) => (
               <FadeIn key={i} delay={0.1 * i}>
-                <div className="group border-b border-neutral-100 pb-6 hover:pl-4 transition-all duration-300 cursor-default">
-                  <div className="flex justify-between items-baseline mb-1">
-                    <h4 className="text-xl font-medium">{member.name}</h4>
-                    <span className="font-mono text-xs text-neutral-400 uppercase">
+                <div className="group border-b border-neutral-100 pb-6 hover:pl-2 transition-all duration-300 cursor-default">
+                  <div className="flex flex-col mb-1">
+                    <h4 className="text-lg font-medium">{member.name}</h4>
+                    <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
                       {member.role}
                     </span>
                   </div>
-                  <p className="text-neutral-500 font-light mb-2">{member.desc}</p>
-                  <a
-                    href={`mailto:${member.email}`}
-                    className="text-xs font-mono text-neutral-400 hover:text-black transition-colors"
-                  >
-                    {member.email}
-                  </a>
+                  <p className="text-neutral-500 font-light text-sm mb-2">{member.desc}</p>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={`mailto:${member.email}`}
+                      className="text-[10px] font-mono text-neutral-400 hover:text-black transition-colors"
+                    >
+                      {member.email}
+                    </a>
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-400 hover:text-[#0077b5] transition-colors"
+                    >
+                      <Linkedin size={14} />
+                    </a>
+                  </div>
                 </div>
               </FadeIn>
             ))}
