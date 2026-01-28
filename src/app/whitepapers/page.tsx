@@ -36,7 +36,7 @@ export default function WhitepapersPage() {
       title: "The Noll Framework: Operationalizing Art Market Analysis",
       abstract:
         "An in-depth look at how we adapt Roger Noll's sports economics framework to decode the sociological and institutional drivers of asset appreciation in the art market.",
-      date: "Q4 2025",
+      date: "Q1 2026",
       status: "Available",
       url: "/whitepapers/bloomsbury_auction.pdf",
     },
@@ -44,7 +44,7 @@ export default function WhitepapersPage() {
       title: "The Efficiency Trap: Market Microstructure in Alternative Assets",
       abstract:
         "An analysis of why traditional efficiency models fail in prestige-driven markets and how to exploit structural information asymmetries.",
-      date: "Q4 2025",
+      date: "Q1 2026",
       status: "Available",
       url: "/whitepapers/maynard_efficiency_trap.pdf",
     },
