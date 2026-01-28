@@ -25,12 +25,12 @@ const FadeIn = ({
 export default function WhitepapersPage() {
   const papers = [
     {
-      title: "Understanding Prices at Art Auctions: A Conceptual Framework for the Auction Price Mechanism",
+      title: "The Cassandra and the Commander: Strategic Divergence in Decision-Dependent Forecasting",
       abstract:
-        "Noll, Laura Johanna (2022). The foundational theoretical framework providing a multi-dimensional approach to value construction and price mechanisms in global art markets.",
-      date: "2022",
-      status: "Reference",
-      url: "https://www.alexandria.unisg.ch/handle/20.500.14171/108262",
+        "Refining the distinction between passive and active forecasting. We demonstrate how strategic actors maximize utility by diverging from base rates when the marginal elasticity of effort is high.",
+      date: "Jan 2026",
+      status: "Available",
+      url: "/whitepapers/bloomsbury_2_forecasting.pdf",
     },
     {
       title: "The Noll Framework: Operationalizing Art Market Analysis",
@@ -64,11 +64,19 @@ export default function WhitepapersPage() {
       status: "Coming Soon",
       url: "",
     },
+    {
+      title: "Understanding Prices at Art Auctions: A Conceptual Framework for the Auction Price Mechanism",
+      abstract:
+        "Noll, Laura Johanna (2022). The foundational theoretical framework providing a multi-dimensional approach to value construction and price mechanisms in global art markets.",
+      date: "2022",
+      status: "Reference",
+      url: "https://www.alexandria.unisg.ch/handle/20.500.14171/108262",
+    },
   ];
 
   return (
     <main className="min-h-screen bg-white text-neutral-900 selection:bg-neutral-900 selection:text-white font-sans">
-      <nav className="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-neutral-100">
+      <nav className="fixed top-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center bg-white/90 backdrop-blur-sm border-b border-neutral-100">
         <Link
           href="/"
           className="font-mono font-bold tracking-tighter text-xl flex items-center gap-2 hover:opacity-70 transition-opacity"
@@ -78,12 +86,12 @@ export default function WhitepapersPage() {
         </Link>
       </nav>
 
-      <section className="pt-40 pb-24 px-6 md:px-12 max-w-5xl mx-auto">
+      <section className="pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto">
         <FadeIn>
-          <h1 className="text-5xl md:text-7xl font-serif mb-8 tracking-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 tracking-tight">
             Research & <br /> Whitepapers.
           </h1>
-          <p className="text-xl font-mono text-neutral-600 mb-24 max-w-2xl">
+          <p className="text-lg text-neutral-600 mb-24 max-w-2xl font-light">
             Our methodology is open-source at the core. We believe in rigorous
             peer review and transparent quantitative frameworks.
           </p>
@@ -104,11 +112,11 @@ export default function WhitepapersPage() {
                     <h3 className="text-2xl font-serif mb-4 group-hover:underline decoration-1 underline-offset-4">
                       {paper.title}
                     </h3>
-                    <p className="text-neutral-600 font-light leading-relaxed max-w-3xl">
+                    <p className="text-neutral-600 font-light leading-relaxed max-w-3xl text-base">
                       {paper.abstract}
                     </p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center pt-2 md:pt-0">
                     {paper.status === "Reference" ? (
                       <a
                         href={paper.url}
