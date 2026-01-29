@@ -10,7 +10,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["ui-serif", "Georgia", "Cambria", "Times New Roman", "Times", "serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
     },

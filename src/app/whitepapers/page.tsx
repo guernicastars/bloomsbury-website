@@ -88,7 +88,7 @@ export default function WhitepapersPage() {
 
       <section className="pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto">
         <FadeIn>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 tracking-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl mb-8 tracking-tight">
             Research & <br /> Whitepapers.
           </h1>
           <p className="text-lg text-neutral-600 mb-24 max-w-2xl font-light">
@@ -109,7 +109,7 @@ export default function WhitepapersPage() {
                       <span className="w-px h-3 bg-neutral-300"></span>
                       <span>{paper.status}</span>
                     </div>
-                    <h3 className="text-2xl font-serif mb-4 group-hover:underline decoration-1 underline-offset-4">
+                    <h3 className="text-2xl mb-4 group-hover:underline decoration-1 underline-offset-4">
                       {paper.title}
                     </h3>
                     <p className="text-neutral-600 font-light leading-relaxed max-w-3xl text-base">

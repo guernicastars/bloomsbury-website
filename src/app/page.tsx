@@ -4,15 +4,10 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
-  Network,
-  BrainCircuit,
-  BarChart3,
-  Lock,
-  Users,
-  Cpu,
   ChevronDown,
   Linkedin,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // --- Components ---
 
@@ -33,33 +28,6 @@ const FadeIn = ({
   </motion.div>
 );
 
-const BentoCard = ({
-  title,
-  subtitle,
-  icon: Icon,
-  children,
-  className = "",
-}: any) => (
-  <div
-    className={`bg-neutral-50 border border-neutral-200 p-8 flex flex-col justify-between ${className}`}
-  >
-    <div>
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-neutral-900 text-white">
-          <Icon size={20} />
-        </div>
-        <h3 className="font-mono text-xs tracking-widest uppercase font-semibold">
-          {title}
-        </h3>
-      </div>
-      <h4 className="text-2xl font-serif text-neutral-900 mb-4">{subtitle}</h4>
-      <p className="text-neutral-600 font-light leading-relaxed text-base">
-        {children}
-      </p>
-    </div>
-  </div>
-);
-
 // --- Main Page Component ---
 
 export default function BloomsburyPage() {
@@ -78,11 +46,8 @@ export default function BloomsburyPage() {
           BLOOMSBURY TECHNOLOGY
         </div>
         <div className="hidden md:flex gap-8 items-center font-mono text-xs uppercase tracking-widest text-neutral-600">
-          <a href="#thesis" className="hover:text-neutral-900 transition-colors">
-            Thesis
-          </a>
-          <a href="#stack" className="hover:text-neutral-900 transition-colors">
-            The Stack
+          <a href="/research" className="hover:text-neutral-900 transition-colors">
+            Research
           </a>
           <a href="#team" className="hover:text-neutral-900 transition-colors">
             Team
@@ -90,12 +55,9 @@ export default function BloomsburyPage() {
           <a href="/whitepapers" className="hover:text-neutral-900 transition-colors">
             Whitepapers
           </a>
-          <a
-            href="#contact"
-            className="border border-neutral-900 px-4 py-2 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-all"
-          >
-            Partner
-          </a>
+          <Button variant="outline" className="rounded-none border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white" asChild>
+            <a href="#contact">Partner</a>
+          </Button>
         </div>
       </nav>
 
@@ -106,7 +68,7 @@ export default function BloomsburyPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-tight leading-[1.1] mb-8"
+            className="text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1] mb-8"
           >
             Quantifying the <br />
             <span className="italic text-neutral-400">Unquantifiable.</span>
@@ -121,8 +83,8 @@ export default function BloomsburyPage() {
               We are building the first <strong>Causal and Behavioral Investment Engine</strong> for the global art market. Moving beyond simple price correlation, we engineer alpha by understanding the <em>why</em> behind asset appreciation.
             </p>
             <div className="flex gap-4">
-               <a href="#thesis" className="inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest border-b border-neutral-900 pb-1 hover:opacity-70 transition-opacity">
-                  Read the Thesis <ArrowRight size={14}/>
+               <a href="/research" className="inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest border-b border-neutral-900 pb-1 hover:opacity-70 transition-opacity">
+                  Read our Research Agenda <ArrowRight size={14}/>
                </a>
             </div>
           </motion.div>
@@ -151,137 +113,6 @@ export default function BloomsburyPage() {
         </motion.div>
       </section>
 
-      {/* The Thesis / Noll Framework */}
-      <section id="thesis" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
-          <div className="md:col-span-5">
-            <FadeIn>
-              <h2 className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">
-                01 — The Thesis
-              </h2>
-              <h3 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">
-                Price is a construct. <br/> Value is a graph.
-              </h3>
-              <p className="text-neutral-600 font-light text-lg leading-relaxed mb-8">
-                Traditional hedonic regression fails in illiquid,
-                prestige-driven markets. We operationalize the{" "}
-                <strong>Noll Framework</strong> to decode the sociological and
-                institutional drivers of asset appreciation.
-              </p>
-            </FadeIn>
-          </div>
-          <div className="md:col-span-7 grid grid-cols-1 gap-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <FadeIn delay={0.2}>
-                <div className="group">
-                    <h4 className="font-serif text-2xl mb-3 group-hover:underline decoration-1 underline-offset-4">Active Price Management</h4>
-                    <p className="text-base text-neutral-600 leading-relaxed">
-                    Quantifying the "marketing premium" extracted by auction
-                    houses through catalog placement and sentiment analysis.
-                    </p>
-                </div>
-                </FadeIn>
-                <FadeIn delay={0.3}>
-                <div className="group">
-                    <h4 className="font-serif text-2xl mb-3 group-hover:underline decoration-1 underline-offset-4">Institutional Gatekeeping</h4>
-                    <p className="text-base text-neutral-600 leading-relaxed">
-                    Tracking "Canonization" via museum exhibitions and critical
-                    reviews using NLP and causal discovery.
-                    </p>
-                </div>
-                </FadeIn>
-                <FadeIn delay={0.4}>
-                <div className="group">
-                    <h4 className="font-serif text-2xl mb-3 group-hover:underline decoration-1 underline-offset-4">The Winner's Curse</h4>
-                    <p className="text-base text-neutral-600 leading-relaxed">
-                    Modeling bidder behavior and liquidity dry-ups to signal "Do
-                    Not Bid" when market dynamics overheat.
-                    </p>
-                </div>
-                </FadeIn>
-                <FadeIn delay={0.5}>
-                <div className="group">
-                    <h4 className="font-serif text-2xl mb-3 group-hover:underline decoration-1 underline-offset-4">Provenance Networks</h4>
-                    <p className="text-base text-neutral-600 leading-relaxed">
-                    Detecting wash trading and "prestige transfer" through
-                    Heterogeneous Graph Neural Networks.
-                    </p>
-                </div>
-                </FadeIn>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Tech Stack - Balanced Grid */}
-      <section id="stack" className="bg-neutral-50 py-24 px-6 md:px-12 border-t border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <div className="mb-16 max-w-3xl">
-              <h2 className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">
-                02 — The Engine
-              </h2>
-              <h3 className="text-4xl md:text-5xl font-serif mb-6">
-                Deep Tech for Alternative Assets
-              </h3>
-              <p className="text-lg text-neutral-600 font-light">
-                  We don't just predict what happens; we understand why. By moving from correlation to causality, we answer the counterfactuals that define alpha.
-              </p>
-            </div>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Causal Inference */}
-            <FadeIn delay={0.1}>
-              <BentoCard
-                title="Causal Inference"
-                subtitle="Moving up Pearl's Ladder"
-                icon={BrainCircuit}
-                className="h-full bg-white"
-              >
-                Our <strong>Structural Causal Models (SCM)</strong> and <strong>Augmented Time Series</strong> architectures allow us to answer counterfactuals: "What would the price be if this artist hadn't had a MoMA retrospective?" This moves us from correlation (Seeing) to intervention (Doing).
-              </BentoCard>
-            </FadeIn>
-
-            {/* MATMCD - LLM Agents */}
-            <FadeIn delay={0.2}>
-              <BentoCard
-                title="MATMCD"
-                subtitle="LLM-Augmented Discovery"
-                icon={Cpu}
-                className="h-full bg-white"
-              >
-                Our <strong>Multi-Agent Tool-augmented Multi-Modal Causal Discovery</strong> system deploys LLM agents to scrape unstructured text (catalogs, archives) and refine our causal graphs, creating a proprietary "Living SCM" of the art market.
-              </BentoCard>
-            </FadeIn>
-
-            {/* Simulation / ABM */}
-            <FadeIn delay={0.3}>
-              <BentoCard
-                title="Simulation"
-                subtitle="Agent-Based Modeling"
-                icon={Users}
-                className="h-full bg-white"
-              >
-                We simulate auction rooms with heterogeneous agents (Collectors vs. Speculators) using <strong>Reinforcement Learning</strong> to identify liquidity risks and optimal bidding strategies in low-data environments.
-              </BentoCard>
-            </FadeIn>
-
-            {/* Network Topology */}
-            <FadeIn delay={0.4}>
-              <BentoCard
-                title="Network Topology"
-                subtitle="Heterogeneous GNNs"
-                icon={Network}
-                className="h-full bg-white"
-              >
-                Value is path-dependent. We map the "invisible" connections of provenance using <strong>Graph Neural Networks</strong> to detect anomalies, wash trading, and prestige transfer across generations.
-              </BentoCard>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
       {/* Team Section */}
       <section id="team" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
@@ -290,7 +121,7 @@ export default function BloomsburyPage() {
               <h2 className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">
                 03 — The Lab
               </h2>
-              <h3 className="text-4xl font-serif mb-6">Built by Research.</h3>
+              <h3 className="text-4xl mb-6">Built by Research.</h3>
               <p className="text-neutral-600 text-lg mb-8 font-light">
                 We are structured not as a typical startup, but as a specialized
                 research lab. Our talent density is our primary asset.
@@ -413,7 +244,7 @@ export default function BloomsburyPage() {
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start">
           <div className="max-w-xl">
-            <h2 className="text-5xl md:text-7xl font-serif mb-8 tracking-tight">
+            <h2 className="text-5xl md:text-7xl mb-8 tracking-tight">
               Join the <br /> Paradigm Shift.
             </h2>
             <div className="flex flex-col gap-4">
