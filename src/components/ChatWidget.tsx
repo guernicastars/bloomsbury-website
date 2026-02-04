@@ -74,12 +74,24 @@ export function ChatWidget() {
     }
   };
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      // In production, this would send to your backend
-      console.log("Waitlist signup:", email);
-      setWaitlistSubmitted(true);
+      try {
+        const response = await fetch("/api/waitlist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim() }),
+        });
+
+        if (response.ok) {
+          setWaitlistSubmitted(true);
+        } else {
+          console.error("Failed to submit to waitlist");
+        }
+      } catch (error) {
+        console.error("Waitlist submission error:", error);
+      }
     }
   };
 
