@@ -10,10 +10,12 @@ import {
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  image?: string;
 }
 
 interface RequestBody {
   message: string;
+  image?: string;
   history?: ChatMessage[];
 }
 
@@ -27,6 +29,7 @@ Your capabilities include:
 - Price trends and market analysis
 - Comparative analysis across artists and periods
 - Art market insights and statistics
+- Artwork image analysis and identification
 
 Guidelines:
 - Keep responses concise and data-driven
@@ -34,7 +37,8 @@ Guidelines:
 - Provide context for market trends when relevant
 - If asked about something outside art market topics, politely redirect to your area of expertise
 - Be helpful, professional, and informative
-- When given auction data, present it clearly with the most important insights first`;
+- When given auction data, present it clearly with the most important insights first
+- When analyzing images, identify the artist (if recognizable), style, period, medium, and provide market context if possible`;
 
 function formatPrice(price: number): string {
   if (price >= 1_000_000) {
@@ -99,40 +103,107 @@ Message: "${message}"`,
   }
 }
 
+async function identifyArtistFromImage(image: string, apiKey: string): Promise<string | null> {
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [
+                {
+                  inlineData: {
+                    mimeType: "image/jpeg",
+                    data: image,
+                  },
+                },
+                {
+                  text: `Look at this artwork image. If you can identify the artist, return ONLY the artist's name. If you cannot identify the artist with confidence, return "NONE". Do not include any other text.`,
+                },
+              ],
+            },
+          ],
+          generationConfig: { temperature: 0, maxOutputTokens: 50 },
+        }),
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const name = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    return name && name !== "NONE" ? name : null;
+  } catch {
+    return null;
+  }
+}
+
+interface ContentPart {
+  text?: string;
+  inlineData?: {
+    mimeType: string;
+    data: string;
+  };
+}
+
+interface Content {
+  role: string;
+  parts: ContentPart[];
+}
+
 async function generateResponse(
   message: string,
   history: ChatMessage[],
   context: string,
-  apiKey: string
+  apiKey: string,
+  image?: string
 ): Promise<string> {
-  const contents = [
+  const contents: Content[] = [
     { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
     {
       role: "model",
       parts: [
         {
-          text: "I understand. I am Bloomsbury Bot, ready to help with art market questions.",
+          text: "I understand. I am Bloomsbury Bot, ready to help with art market questions and analyze artwork images.",
         },
       ],
     },
     ...history.map((msg) => ({
       role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
+      parts: msg.image
+        ? [
+            { inlineData: { mimeType: "image/jpeg", data: msg.image } },
+            { text: msg.content },
+          ]
+        : [{ text: msg.content }],
     })),
   ];
 
+  // Build the final user message with optional image
+  const userParts: ContentPart[] = [];
+
+  if (image) {
+    userParts.push({
+      inlineData: {
+        mimeType: "image/jpeg",
+        data: image,
+      },
+    });
+  }
+
   if (context) {
-    contents.push({
-      role: "user",
-      parts: [
-        {
-          text: `Here is relevant auction data from our database:\n\n${context}\n\nUser question: ${message}\n\nProvide a helpful response using this data.`,
-        },
-      ],
+    userParts.push({
+      text: `Here is relevant auction data from our database:\n\n${context}\n\nUser question: ${message}\n\nProvide a helpful response using this data.`,
     });
   } else {
-    contents.push({ role: "user", parts: [{ text: message }] });
+    userParts.push({ text: message });
   }
+
+  contents.push({ role: "user", parts: userParts });
 
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
@@ -160,7 +231,7 @@ async function generateResponse(
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as RequestBody;
-    const { message, history = [] } = body;
+    const { message, image, history = [] } = body;
 
     if (!message || typeof message !== "string") {
       return NextResponse.json(
@@ -174,7 +245,7 @@ export async function POST(request: NextRequest) {
 
     // If no API key, return demo response
     if (!apiKey) {
-      return NextResponse.json({ response: getDemoResponse(message) });
+      return NextResponse.json({ response: getDemoResponse(message, !!image) });
     }
 
     let context = "";
@@ -198,8 +269,14 @@ export async function POST(request: NextRequest) {
             context += `- Average Lot Price: ${formatPrice(stats.avg_price_usd)}\n`;
           }
         } else {
-          // Try to extract artist name and get their data
-          const artistName = await extractArtistName(message, apiKey);
+          // Try to extract artist name from message or image
+          let artistName = await extractArtistName(message, apiKey);
+
+          // If no artist in message but image provided, try to identify from image
+          if (!artistName && image) {
+            artistName = await identifyArtistFromImage(image, apiKey);
+          }
+
           if (artistName) {
             const [stats, topLots] = await Promise.all([
               searchArtist(artistName),
@@ -217,8 +294,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Generate response with Gemini
-    const response = await generateResponse(message, history, context, apiKey);
+    // Generate response with Gemini (including image if provided)
+    const response = await generateResponse(message, history, context, apiKey, image);
     return NextResponse.json({ response });
   } catch (error) {
     console.error("Chat API error:", error);
@@ -229,8 +306,20 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function getDemoResponse(message: string): string {
+function getDemoResponse(message: string, hasImage: boolean = false): string {
   const lowerMessage = message.toLowerCase();
+
+  if (hasImage) {
+    return `I can see you've shared an image! In demo mode, I can't analyze images.
+
+To enable image analysis:
+1. Add your Google Gemini API key to \`.env.local\`
+
+With full functionality, I can:
+- Identify the artist and artwork
+- Provide auction history and market data
+- Estimate value based on comparable sales`;
+  }
 
   if (lowerMessage.includes("picasso")) {
     return `Pablo Picasso (1881-1973) is one of the most influential artists of the 20th century and a dominant force in the art market.
@@ -266,6 +355,7 @@ I can help with:
 - **Artist Research** - market performance, auction history
 - **Price Analysis** - trends, comparable sales
 - **Market Insights** - sector trends, statistics
+- **Image Analysis** - identify artworks and provide market context
 
 What would you like to explore?`;
   }
@@ -275,5 +365,6 @@ What would you like to explore?`;
 1. Add your Google Gemini API key to \`.env.local\`
 2. Ensure ClickHouse credentials are configured
 
-**Try asking about:** Picasso, Warhol, or market trends.`;
+**Try asking about:** Picasso, Warhol, or market trends.
+**Or:** Send me an image of an artwork for analysis!`;
 }

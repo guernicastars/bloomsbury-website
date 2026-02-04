@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ChatMessage as ChatMessageType } from "@/lib/openclaw";
+import Image from "next/image";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -30,6 +31,18 @@ export function ChatMessage({ message }: ChatMessageProps) {
           <span className="block font-mono text-[10px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">
             Bloomsbury Bot
           </span>
+        )}
+        {message.image && (
+          <div className="mb-2 rounded overflow-hidden">
+            <Image
+              src={`data:image/jpeg;base64,${message.image}`}
+              alt="Uploaded image"
+              width={200}
+              height={200}
+              className="max-w-full h-auto object-contain"
+              unoptimized
+            />
+          </div>
         )}
         <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
       </div>

@@ -2,16 +2,21 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Minus, Send } from "lucide-react";
+import { MessageSquare, X, Minus, Send, ImagePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChatMessage, TypingIndicator } from "@/components/ChatMessage";
-import { sendMessage, type ChatMessage as ChatMessageType } from "@/lib/openclaw";
+import {
+  sendMessage,
+  fileToBase64,
+  type ChatMessage as ChatMessageType,
+} from "@/lib/openclaw";
+import Image from "next/image";
 
 const INITIAL_MESSAGE: ChatMessageType = {
   role: "assistant",
   content:
-    "Hello! I'm Bloomsbury Bot, your art market intelligence assistant. I have access to 791,000+ auction lots from Christie's and Sotheby's. How can I help you today?",
+    "Hello! I'm Bloomsbury Bot, your art market intelligence assistant. I have access to 791,000+ auction lots from Christie's and Sotheby's. You can also send me images of artworks for analysis. How can I help you today?",
   timestamp: new Date(),
 };
 
@@ -21,8 +26,11 @@ export function ChatWidget() {
   const [messages, setMessages] = useState<ChatMessageType[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,21 +46,60 @@ export function ChatWidget() {
     }
   }, [isOpen, isMinimized]);
 
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file");
+      return;
+    }
+
+    // Validate file size (max 4MB for Gemini)
+    if (file.size > 4 * 1024 * 1024) {
+      alert("Image must be less than 4MB");
+      return;
+    }
+
+    try {
+      const base64 = await fileToBase64(file);
+      setSelectedImage(base64);
+      setImagePreview(`data:${file.type};base64,${base64}`);
+    } catch (error) {
+      console.error("Error reading file:", error);
+      alert("Error reading image file");
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const clearSelectedImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    if ((!input.trim() && !selectedImage) || isLoading) return;
 
     const userMessage: ChatMessageType = {
       role: "user",
-      content: input.trim(),
+      content: input.trim() || "What can you tell me about this artwork?",
+      image: selectedImage || undefined,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    const imageToSend = selectedImage;
+    clearSelectedImage();
     setIsLoading(true);
 
-    const response = await sendMessage(userMessage.content, messages);
+    const response = await sendMessage(userMessage.content, messages, imageToSend || undefined);
 
     if (response.error) {
       setMessages((prev) => [
@@ -171,6 +218,29 @@ export function ChatWidget() {
                     <div ref={messagesEndRef} />
                   </div>
 
+                  {/* Image Preview */}
+                  {imagePreview && (
+                    <div className="px-3 pb-2">
+                      <div className="relative inline-block">
+                        <Image
+                          src={imagePreview}
+                          alt="Selected image"
+                          width={80}
+                          height={80}
+                          className="rounded border border-neutral-200 dark:border-neutral-700 object-cover"
+                          unoptimized
+                        />
+                        <button
+                          onClick={clearSelectedImage}
+                          className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-neutral-900 text-white flex items-center justify-center hover:bg-neutral-700 dark:bg-white dark:text-neutral-900"
+                          aria-label="Remove image"
+                        >
+                          <X size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Input */}
                   <form
                     onSubmit={handleSubmit}
@@ -178,18 +248,37 @@ export function ChatWidget() {
                   >
                     <div className="flex gap-2">
                       <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleImageSelect}
+                        accept="image/*"
+                        className="hidden"
+                        aria-label="Upload image"
+                      />
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isLoading}
+                        className="h-9 w-9 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800"
+                        aria-label="Attach image"
+                      >
+                        <ImagePlus size={18} />
+                      </Button>
+                      <input
                         ref={inputRef}
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Type a message..."
+                        placeholder={selectedImage ? "Add a message..." : "Type a message..."}
                         disabled={isLoading}
                         className="flex-1 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder:text-neutral-400 dark:focus:ring-white"
                       />
                       <Button
                         type="submit"
                         size="icon"
-                        disabled={isLoading || !input.trim()}
+                        disabled={isLoading || (!input.trim() && !selectedImage)}
                         className="h-9 w-9 rounded-md bg-neutral-900 text-white hover:bg-neutral-800 disabled:opacity-50 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100"
                         aria-label="Send message"
                       >
