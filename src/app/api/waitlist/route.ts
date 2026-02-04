@@ -89,7 +89,16 @@ export async function GET(request: NextRequest) {
     }
 
     if (!process.env.CLICKHOUSE_HOST || !process.env.CLICKHOUSE_PASSWORD) {
-      return NextResponse.json({ emails: [], error: "Database not configured" });
+      return NextResponse.json({
+        emails: [],
+        error: "Database not configured",
+        debug: {
+          hasHost: !!process.env.CLICKHOUSE_HOST,
+          hasPort: !!process.env.CLICKHOUSE_PORT,
+          hasUser: !!process.env.CLICKHOUSE_USER,
+          hasPassword: !!process.env.CLICKHOUSE_PASSWORD,
+        }
+      });
     }
 
     const client = getClickHouseClient();
