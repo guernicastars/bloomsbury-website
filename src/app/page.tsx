@@ -46,6 +46,9 @@ export default function BloomsburyPage() {
           BLOOMSBURY TECHNOLOGY
         </div>
         <div className="hidden md:flex gap-8 items-center font-mono text-xs uppercase tracking-widest text-neutral-600">
+          <a href="/expertise" className="hover:text-neutral-900 transition-colors">
+            Expertise
+          </a>
           <a href="/research" className="hover:text-neutral-900 transition-colors">
             Research
           </a>
@@ -111,6 +114,83 @@ export default function BloomsburyPage() {
         >
           <ChevronDown className="animate-bounce text-neutral-400" />
         </motion.div>
+      </section>
+
+      {/* Expertise Section */}
+      <section id="expertise" className="py-24 px-6 md:px-12 max-w-7xl mx-auto border-b border-neutral-100">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
+          <div className="md:col-span-4">
+            <FadeIn>
+              <h2 className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">
+                02 — Expertise
+              </h2>
+              <h3 className="text-4xl mb-6">Beyond Pattern Recognition.</h3>
+              <p className="text-neutral-600 text-lg mb-8 font-light">
+                We don't just fit models—we understand causality. Our economics foundation allows us to answer the questions most ML engineers can't: <em>why</em> things happen, not just <em>what</em> will happen.
+              </p>
+              <a
+                href="/expertise"
+                className="inline-flex items-center gap-2 text-sm font-mono uppercase tracking-widest border-b border-neutral-900 pb-1 hover:opacity-70 transition-opacity"
+              >
+                View Full Expertise <ArrowRight size={14}/>
+              </a>
+            </FadeIn>
+          </div>
+
+          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {[
+              {
+                title: "Causal Intelligence",
+                desc: "Bayesian Networks, Causal Graphs, Structural Models. Understanding the why behind outcomes.",
+                icon: "∴",
+              },
+              {
+                title: "Custom Embeddings",
+                desc: "Talent, assets, domain-specific vector representations. Purpose-built for your context.",
+                icon: "⊕",
+              },
+              {
+                title: "Deep Learning & AI",
+                desc: "Fine-tuning, quantization, digital clones. Enterprise-grade AI solutions.",
+                icon: "⧉",
+              },
+              {
+                title: "Machine Learning",
+                desc: "CatBoost, LightGBM, Random Forests. Classical methods with rigorous validation.",
+                icon: "∇",
+              },
+              {
+                title: "Data Engineering",
+                desc: "Scraping, mining, sourcing from unusual sources. We get the data others can't.",
+                icon: "⊞",
+              },
+              {
+                title: "Analytics & BI",
+                desc: "Dashboards, consulting, strategic insights. Turn data into decisions.",
+                icon: "◈",
+              },
+              {
+                title: "Advanced Systems",
+                desc: "AI Agents, Prediction Markets. Building the infrastructure for intelligent systems.",
+                icon: "⬡",
+              },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={0.05 * i}>
+                <div className="border border-neutral-100 p-6 hover:border-neutral-900 transition-colors group">
+                  <div className="text-3xl mb-4 text-neutral-300 group-hover:text-neutral-900 transition-colors font-light">
+                    {item.icon}
+                  </div>
+                  <h4 className="font-mono text-sm uppercase tracking-widest mb-3 text-neutral-900">
+                    {item.title}
+                  </h4>
+                  <p className="text-neutral-600 font-light text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Team Section */}
@@ -279,6 +359,9 @@ export default function BloomsburyPage() {
                 className="block hover:text-white transition-colors"
               >
                 LinkedIn
+              </a>
+              <a href="/expertise" className="block hover:text-white transition-colors">
+                Expertise
               </a>
               <a href="/whitepapers" className="block hover:text-white transition-colors">
                 Whitepapers
