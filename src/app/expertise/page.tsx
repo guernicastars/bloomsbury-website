@@ -221,7 +221,6 @@ export default function ExpertisePage() {
                 subtitle="Classical Methods, Rigorous Validation"
                 icon={Target}
                 techniques={[
-                  "CatBoost",
                   "LightGBM",
                   "Random Forests",
                   "K-Means Clustering",

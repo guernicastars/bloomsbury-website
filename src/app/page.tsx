@@ -156,7 +156,7 @@ export default function BloomsburyPage() {
               },
               {
                 title: "Machine Learning",
-                desc: "CatBoost, LightGBM, Random Forests. Classical methods with rigorous validation.",
+                desc: "LightGBM, Random Forests. Classical methods with rigorous validation.",
                 icon: "∇",
               },
               {
