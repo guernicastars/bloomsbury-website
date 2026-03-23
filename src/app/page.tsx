@@ -55,8 +55,8 @@ export default function BloomsburyPage() {
           <a href="#team" className="hover:text-neutral-900 transition-colors">
             Team
           </a>
-          <a href="/whitepapers" className="hover:text-neutral-900 transition-colors">
-            Whitepapers
+          <a href="/work" className="hover:text-neutral-900 transition-colors">
+            Work
           </a>
           <Button variant="outline" className="rounded-none border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white" asChild>
             <a href="#contact">Partner</a>
@@ -241,11 +241,11 @@ export default function BloomsburyPage() {
                 desc: "Data Engineering & Infrastructure. JKU.",
               },
               {
-                name: "Eugene Brotons Batista",
-                role: "COO",
-                email: "eugene.brotonsbatista@bloomsburytech.com",
-                linkedin: "https://www.linkedin.com/in/eugenia-brotons-batista/",
-                desc: "Operations & Strategy Execution. LSE.",
+                name: "Artur Garipov",
+                role: "Data Engineer",
+                email: "artur.garipov@bloomsburytech.com",
+                linkedin: "https://www.linkedin.com/in/garipov-am/",
+                desc: "Data Engineering & Pipelines.",
               },
               {
                 name: "Delphine Provost",
@@ -253,34 +253,6 @@ export default function BloomsburyPage() {
                 email: "delphine.provost@bloomsburytech.com",
                 linkedin: "https://www.linkedin.com/in/delphine-provost-72a35b251/",
                 desc: "Strategy & Operations Management. LSE.",
-              },
-              {
-                name: "Paulina Sielska",
-                role: "VP",
-                email: "paulina.sielska@bloomsburytech.com",
-                linkedin: "https://www.linkedin.com/in/paulina-sielska-6082aa1b8/",
-                desc: "Research Strategy & Operations. LSE.",
-              },
-              {
-                name: "Nikita Berezin",
-                role: "Financial Structuring",
-                email: "nikita.berezin@bloomsburytech.com",
-                linkedin: "https://www.linkedin.com/in/nikita-berezin-44b5a2141/",
-                desc: "Financial Structuring & Compliance. LSE.",
-              },
-              {
-                name: "Nikol Savova",
-                role: "Quant Research",
-                email: "nikol.savova@bloomsburytech.com",
-                linkedin: "https://www.linkedin.com/in/nikolsavova/",
-                desc: "Causal Inference & ML. Oxford Mathematics.",
-              },
-              {
-                name: "Andrew Vavrunek",
-                role: "VC Relations",
-                email: "andrew.vavrunek@bloomsburytech.com",
-                linkedin: "https://www.linkedin.com/in/andrewvavrunek/",
-                desc: "Investor Relations & Partnerships. UCSC / LSE.",
               },
             ].map((member, i) => (
               <FadeIn key={i} delay={0.05 * i}>
@@ -315,6 +287,23 @@ export default function BloomsburyPage() {
             ))}
           </div>
         </div>
+
+        <FadeIn delay={0.2}>
+          <div className="mt-16 border border-neutral-100 bg-neutral-50 p-8 md:p-10 max-w-7xl mx-auto">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400 mb-3">
+              We're Hiring — Interns
+            </h4>
+            <p className="text-neutral-600 font-light text-base mb-4">
+              We are looking for sharp, motivated interns to join the lab. Part-time positions available immediately. Full-time positions starting April.
+            </p>
+            <a
+              href="mailto:eugene.shcherbinin@bloomsburytech.com?subject=Internship — Bloomsbury Technology"
+              className="inline-block font-mono text-xs text-neutral-900 border-b border-neutral-300 hover:border-neutral-900 transition-colors pb-0.5"
+            >
+              eugene.shcherbinin@bloomsburytech.com →
+            </a>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Footer / Contact */}
@@ -363,8 +352,8 @@ export default function BloomsburyPage() {
               <a href="/expertise" className="block hover:text-white transition-colors">
                 Expertise
               </a>
-              <a href="/whitepapers" className="block hover:text-white transition-colors">
-                Whitepapers
+              <a href="/work" className="block hover:text-white transition-colors">
+                Work
               </a>
             </div>
           </div>
